@@ -22,31 +22,10 @@ jobs:
       run: mvn clean install
     - name: Build Jar with Maven
       run: mvn clean compile assembly:single
-    - name: Upload Jar file
-      uses: actions/upload-artifact@v1
+    - name: Push Back
+      uses: github-actions-x/commit@v2.6
       with:
-        name: built_jar
-        path: target/dependencyResolver-1.0.0.jar
-  createRelease:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-      - name: Download Artifact
-        uses: actions/download-artifact@v1
-        with:
-          name: built_jar
-      - name: Create Release
-        id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
-        with:
-          tag_name: ${{ github.ref }}
-          release_name: Release ${{ github.ref }}
-          body: |
-            Changes in this Release
-            - First Change
-            - Second Change
-          draft: false
-          prerelease: false
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        name: GitHubActionsBot
+        email: deepak29km@gmail.com
+      
